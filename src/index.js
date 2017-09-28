@@ -1,12 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDom from 'react-dom';
+import { BrowserRouter } from 'react-router-dom'
+import AppRoute from 'src/App/Route';
 
-class Root extends React.Component {
-  render() {
-    return (
-      <h1>Welcome</h1>
-    );
-  }
-}
-
-ReactDOM.render(<Root/>, document.getElementById('app'));
+ReactDom.render((
+  <BrowserRouter>
+    <AppRoute />
+  </BrowserRouter>
+), document.getElementById('app'));

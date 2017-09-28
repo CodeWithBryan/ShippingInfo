@@ -1,4 +1,3 @@
-/* eslint browser: false, node: true, es6: false */
 const path = require('path');
 
 module.exports = {
@@ -22,5 +21,10 @@ module.exports = {
   },
   devServer: {
     contentBase: path.resolve(__dirname, "dist")
+  },
+  resolve: {
+    alias: {
+      src: path.resolve(__dirname, 'src/')
+    }
   }
 };
