@@ -1,20 +1,19 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import ShippingInfoRoute from 'src/ShippingInfo/Route';
+import AppNav from 'src/App/AppNav';
+import { Grid } from 'react-bootstrap';
 
 class AppRoute extends React.Component {
   render() {
     return (
-      <div>
-        <nav>
-          <Link to="/">Shipping Info</Link>
-          <Link to="/list">List</Link>
-        </nav>
+      <Grid fluid>
+        <AppNav />
         <div>
           <Route exact path="/" component={ShippingInfoRoute} />
           <Route exact path="/list" component={ShippingInfoRoute} />
         </div>
-      </div>
+      </Grid>
     );
   }
 }
