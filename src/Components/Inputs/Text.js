@@ -2,13 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 
-class Name extends React.Component {
+class Text extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      validation: null,
-    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleValidation = this.handleValidation.bind(this);
@@ -20,24 +16,17 @@ class Name extends React.Component {
   }
 
   handleValidation() {
-    const { value, required } = this.props;
-
-    // Don't validate if it's not required
-    if (!required) { return; }
-
-    if (value.length < 1) {
-      this.setState({ validation: 'error' });
-    } else {
-      this.setState({ validation: 'success' });
-    }
+    const { onValidate, name } = this.props;
+    onValidate(name);
   }
 
   render() {
+    const { onValidate, status, placeholder } = this.props;
     return (
       <FormGroup
-        validationState={this.state.validation}
+        validationState={status}
       >
-        <ControlLabel>{this.props.placeholder}</ControlLabel>
+        <ControlLabel>{placeholder}</ControlLabel>
         <FormControl
           type="text"
           {...this.props}
@@ -51,11 +40,11 @@ class Name extends React.Component {
   }
 }
 
-Name.propTypes = {
+Text.propTypes = {
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
 };
 
-export default Name;
+export default Text;

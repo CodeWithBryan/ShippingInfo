@@ -6,12 +6,7 @@ class Zipcode extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      validation: null,
-    };
-
     this.handleChange = this.handleChange.bind(this);
-    this.handleValidation = this.handleValidation.bind(this);
   }
 
   handleChange(e) {
@@ -23,31 +18,18 @@ class Zipcode extends React.Component {
     }
   }
 
-  handleValidation() {
-    const { onValidate, required } = this.props;
-    if (required) {
-      if (onValidate()) {
-        this.setState({ validation: 'error' });
-      } else {
-        this.setState({ validation: 'success' });
-      }
-    }
-  }
-
   render() {
-    const { value } = this.props;
+    const { value, status, placeholder, onValidate } = this.props;
     return (
-      <FormGroup
-        validationState={this.state.validation}
-      >
-        <ControlLabel>{this.props.placeholder}</ControlLabel>
+      <FormGroup validationState={status}>
+        <ControlLabel>{placeholder}</ControlLabel>
         <FormControl
           type="text"
           {...this.props}
           value={value}
           className="input-sm"
           onChange={this.handleChange}
-          onBlur={this.handleValidation}
+          onBlur={onValidate}
         />
         <FormControl.Feedback />
       </FormGroup>

@@ -6,10 +6,6 @@ class Email extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      validation: null,
-    };
-
     this.handleChange = this.handleChange.bind(this);
     this.handleValidation = this.handleValidation.bind(this);
   }
@@ -20,31 +16,18 @@ class Email extends React.Component {
   }
 
   handleValidation() {
-    const { value, required } = this.props;
-    const regex = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
-
-    // Don't validate if it's not required
-    if (!required) { return; }
-
-    if (value.length < 1) {
-      this.setState({ validation: 'error' });
-      return;
-    }
-
-    if(!regex.test(value)) {
-      this.setState({ validation: 'error' });
-      return;
-    }
-
-    this.setState({ validation: 'success' });
+    const { onValidate, name } = this.props;
+    onValidate(name);
   }
 
   render() {
+    const { status, placeholder } = this.props;
+
     return (
       <FormGroup
-        validationState={this.state.validation}
+        validationState={status}
       >
-        <ControlLabel>{this.props.placeholder}</ControlLabel>
+        <ControlLabel>{placeholder}</ControlLabel>
         <FormControl
           type="text"
           {...this.props}

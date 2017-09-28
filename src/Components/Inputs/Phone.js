@@ -6,12 +6,7 @@ class Phone extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      validation: null,
-    };
-
     this.handleChange = this.handleChange.bind(this);
-    this.handleValidation = this.handleValidation.bind(this);
   }
 
   handleChange(e) {
@@ -23,22 +18,6 @@ class Phone extends React.Component {
     if (!isNaN(value) && value.length <= 10) {
       onChange(e.target.name, value);
     }
-  }
-
-  handleValidation() {
-    const { value, required } = this.props;
-
-    const tempValue = value.replace(' ', '');
-
-    // Don't validate if it's not required
-    if (!required) { return; }
-
-    if (tempValue.length !== 10) {
-      this.setState({ validation: 'error' });
-      return;
-    }
-
-    this.setState({ validation: 'success' });
   }
 
   formatNumber(num) {
@@ -56,10 +35,10 @@ class Phone extends React.Component {
   }
 
   render() {
-    const { value } = this.props;
+    const { value, status, onValidate } = this.props;
     return (
       <FormGroup
-        validationState={this.state.validation}
+        validationState={status}
       >
         <ControlLabel>{this.props.placeholder}</ControlLabel>
         <FormControl
@@ -68,7 +47,7 @@ class Phone extends React.Component {
           value={this.formatNumber(value)}
           className="input-sm"
           onChange={this.handleChange}
-          onBlur={this.handleValidation}
+          onBlur={onValidate}
         />
         <FormControl.Feedback />
       </FormGroup>

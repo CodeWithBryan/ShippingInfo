@@ -6,12 +6,7 @@ class State extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      validation: null,
-    };
-
     this.handleChange = this.handleChange.bind(this);
-    this.handleValidation = this.handleValidation.bind(this);
   }
 
   handleChange(e) {
@@ -19,46 +14,21 @@ class State extends React.Component {
     onChange(e.target.name, e.target.value);
   }
 
-  handleValidation() {
-    const { onValidate, required } = this.props;
-    if (required) {
-      if (onValidate()) {
-        this.setState({ validation: 'error' });
-      } else {
-        this.setState({ validation: 'success' });
-      }
-    }
-  }
-
-  handleValidation() {
-    const { value, required } = this.props;
-
-    // Don't validate if it's not required
-    if (!required) { return; }
-
-    if (value === '') {
-      this.setState({ validation: 'error' });
-      return;
-    }
-
-    this.setState({ validation: 'success' });
-  }
-
   render() {
-    const { value } = this.props;
+    const { value, status, onValidate, placeholder } = this.props;
     return (
       <FormGroup
-        validationState={this.state.validation}
+        validationState={status ? 'error' : null}
       >
-        <ControlLabel>{this.props.placeholder}</ControlLabel>
+        <ControlLabel>{placeholder}</ControlLabel>
         <select
           {...this.props}
           onChange={this.handleChange}
-          onBlur={this.handleValidation}
+          onBlur={onValidate}
           className="input-sm form-control"
         >
           <option value="">Select State</option>
-          <option onSelect={this.handleChange} value="AL">AL</option>
+          <option value="AL">AL</option>
           <option value="AK">AK</option>
           <option value="AZ">AZ</option>
           <option value="AR">AR</option>
