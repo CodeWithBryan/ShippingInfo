@@ -153,7 +153,6 @@ class ShippingInfoRoute extends React.Component {
               required
               name="email"
               placeholder="Email"
-              value={this.state.email}
               onChange={this.handleChange}
               onValidate={this.handleEmailValidation}
               status={errors.email ? 'error' : null}
@@ -165,7 +164,6 @@ class ShippingInfoRoute extends React.Component {
               required
               name="emailConfirm"
               placeholder="Confirm Email"
-              value={this.state.emailConfirm}
               onChange={this.handleChange}
               onValidate={this.handleEmailValidation}
               status={errors.emailConfirm ? 'error' : null}
