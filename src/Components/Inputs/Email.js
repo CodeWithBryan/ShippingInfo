@@ -20,7 +20,7 @@ class Email extends React.Component {
   }
 
   handleValidation() {
-    const { value, required, confirm } = this.props;
+    const { value, required } = this.props;
     const regex = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
 
     // Don't validate if it's not required
@@ -32,11 +32,6 @@ class Email extends React.Component {
     }
 
     if(!regex.test(value)) {
-      this.setState({ validation: 'error' });
-      return;
-    }
-
-    if(confirm && confirm != value) {
       this.setState({ validation: 'error' });
       return;
     }
@@ -56,6 +51,7 @@ class Email extends React.Component {
           className="input-sm"
           onChange={this.handleChange}
           onBlur={this.handleValidation}
+          onPaste={(e) => { e.preventDefault(); }}
         />
         <FormControl.Feedback />
       </FormGroup>
@@ -68,7 +64,6 @@ Email.propTypes = {
   value: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  confirm: PropTypes.string,
 };
 
 export default Email;

@@ -7,7 +7,8 @@
   "author": "Bryan Gillespie <bryandesigning@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --port 8000"
+    "start": "webpack-dev-server --port 8000",
+    "build": "webpack"
   },
   "devDependencies": {
     "babel-core": "6.26.0",
@@ -16,6 +17,7 @@
     "babel-preset-react": "6.24.1",
     "css-loader": "0.28.7",
     "style-loader": "0.18.2",
+    "uglifyjs-webpack-plugin": "^0.4.6",
     "webpack": "3.6.0",
     "webpack-dev-server": "2.9.1"
   },

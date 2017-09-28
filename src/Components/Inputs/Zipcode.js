@@ -24,23 +24,14 @@ class Zipcode extends React.Component {
   }
 
   handleValidation() {
-    const { value, required } = this.props;
-    const zip = /^\d{5}(-\d{4})?$/;
-
-    // Don't validate if it's not required
-    if (!required) { return; }
-
-    if (value.length !== 5) {
-      this.setState({ validation: 'error' });
-      return;
+    const { onValidate, required } = this.props;
+    if (required) {
+      if (onValidate()) {
+        this.setState({ validation: 'error' });
+      } else {
+        this.setState({ validation: 'success' });
+      }
     }
-
-    if(!zip.test(value)) {
-      this.setState({ validation: 'error' });
-      return;
-    }
-
-    this.setState({ validation: 'success' });
   }
 
   render() {
@@ -65,6 +56,7 @@ class Zipcode extends React.Component {
 }
 
 Zipcode.propTypes = {
+  onValidate: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,

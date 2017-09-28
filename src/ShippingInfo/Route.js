@@ -34,17 +34,41 @@ class ShippingInfoRoute extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleZipValidation = this.handleZipValidation.bind(this);
+    this.handleStateValidation = this.handleStateValidation.bind(this);
   }
 
   handleChange(name, value) {
     this.setState({ [name]: value });
   }
 
+  handleZipValidation() {
+    const { zipcode } = this.state;
+    const zip = /^\d{5}(-\d{4})?$/;
+
+    if (zipcode.length !== 5) {
+      return true;
+    }
+
+    if(!zip.test(zipcode)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  handleStateValidation() {
+    const { state } = this.state;
+    if (state === '') {
+      return true;
+    }
+
+    return false;
+  }
+
   render() {
     const { className } = this.props;
     const { residential } = this.state;
-
-    console.log('STATE: ', this.state);
 
     return (
       <div className={className}>
@@ -77,7 +101,6 @@ class ShippingInfoRoute extends React.Component {
               name="emailConfirm"
               placeholder="Confirm Email"
               value={this.state.emailConfirm}
-              confirm={this.state.email}
               onChange={this.handleChange}
             />
           </Col>
@@ -152,6 +175,7 @@ class ShippingInfoRoute extends React.Component {
               placeholder="State"
               value={this.state.state}
               onChange={this.handleChange}
+              onValidate={this.handleStateValidation}
             />
           </Col>
 
@@ -172,6 +196,7 @@ class ShippingInfoRoute extends React.Component {
               placeholder="Zipcode"
               value={this.state.zipcode}
               onChange={this.handleChange}
+              onValidate={this.handleZipValidation}
             />
           </Col>
 
