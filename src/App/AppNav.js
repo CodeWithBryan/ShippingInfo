@@ -10,7 +10,7 @@ class AppNav extends React.Component {
       <Navbar>
         <Navbar.Header>
           <Navbar.Brand>
-            <a href="#">React-Bootstrap</a>
+            <a href="#">Shipping Info Collection</a>
           </Navbar.Brand>
         </Navbar.Header>
         <Nav>
