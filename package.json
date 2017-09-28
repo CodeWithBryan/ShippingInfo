@@ -1,0 +1,9 @@
+{
+  "name": "ShippingInfo",
+  "version": "1.0.0",
+  "description": "A demo shipping input built in ReactJS",
+  "main": "index.js",
+  "repository": "https://github.com/bryandesigning/ShippingInfo",
+  "author": "Bryan Gillespie <bryandesigning@gmail.com>",
+  "license": "MIT"
+}
