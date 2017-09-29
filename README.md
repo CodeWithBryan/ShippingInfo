@@ -1,6 +1,12 @@
 # ShippingInfo
 A demo shipping input built in ReactJS
 
+## Setup
+ * Clone Repo
+ * Run `yarn`
+ * Run `yarn start` for the dev server
+ * Run `yarn build` for the dist folder to be built out for deploy
+
 # Tools Used
   
 ## Dev Tools
@@ -42,4 +48,18 @@ A demo shipping input built in ReactJS
 
   On submit, the form should change from inputs to FormControl.Static when the form is submitted. --- I updated this, couldn't help myself haha ---
 
-  
+## Todo
+ * Integrate Unit Testing
+ * Actually store user form data
+ * List Route for all submitted user data
+
+
+
+
+
+
+
+
+
+
+
