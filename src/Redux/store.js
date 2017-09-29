@@ -1,7 +1,15 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { reducer } from 'src/Redux/shippingInfo';
+import axiosMiddleware from 'redux-axios';
 
-// TODO: add middleware
+const clients = {
+  default: {
+    axios: {
+      baseURL: 'https://www.wsjwine.com/',
+      responseType: 'json',
+    }
+  }
+};
 
 const defaultState = {
   residential: true,
@@ -29,9 +37,16 @@ const defaultState = {
     state: false,
     city: false,
     zipcode: false,
-  }
+  },
+  products: [],
 };
 
 export default function configureStore(initialState = defaultState) {
-  return createStore(reducer, initialState);
-}
+  return createStore(
+    reducer,
+    initialState,
+    applyMiddleware(
+      axiosMiddleware(clients)
+    )
+  );
+};

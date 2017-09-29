@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { updateField } from 'src/Redux/shippingInfo';
 
 class Text extends React.Component {
   constructor(props) {
@@ -11,8 +13,8 @@ class Text extends React.Component {
   }
 
   handleChange(e) {
-    const { onChange } = this.props;
-    onChange(e.target.name, e.target.value);
+    const { name, dispatch } = this.props;
+    dispatch(updateField(name, e.target.value));
   }
 
   handleValidation() {
@@ -41,10 +43,15 @@ class Text extends React.Component {
 }
 
 Text.propTypes = {
-  onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
 };
 
-export default Text;
+function mapStateToProps(state, props) {
+  return {
+    value: state[props.name]
+  };
+}
+
+export default connect(mapStateToProps)(Text);

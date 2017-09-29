@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { updateField } from 'src/Redux/shippingInfo';
+import { updateField, requestUserData } from 'src/Redux/shippingInfo';
 
 class Email extends React.Component {
   constructor(props) {
@@ -18,7 +18,8 @@ class Email extends React.Component {
   }
 
   handleValidation() {
-    const { onValidate, name } = this.props;
+    const { dispatch, value, onValidate, name } = this.props;
+    dispatch(requestUserData(dispatch, value));
     onValidate(name);
   }
 
@@ -45,7 +46,6 @@ class Email extends React.Component {
 }
 
 Email.propTypes = {
-  onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,

@@ -8,6 +8,7 @@ import Phone from 'src/Components/Inputs/Phone';
 import State from 'src/Components/Inputs/State';
 import Zipcode from 'src/Components/Inputs/Zipcode';
 import Radio from 'src/Components/Inputs/Radio';
+import ProductList from 'src/Components/ProductList';
 
 /*
  *  This Component handles the page structure of the Shipping Form,
@@ -47,16 +48,11 @@ class ShippingInfoRoute extends React.Component {
       }
     };
 
-    this.handleChange = this.handleChange.bind(this);
     this.handleZipValidation = this.handleZipValidation.bind(this);
     this.handleTextValidation = this.handleTextValidation.bind(this);
     this.handleStateValidation = this.handleStateValidation.bind(this);
     this.handleEmailValidation = this.handleEmailValidation.bind(this);
     this.handlePhoneValidation = this.handlePhoneValidation.bind(this);
-  }
-
-  handleChange(name, value) {
-    this.setState({ [name]: value });
   }
 
   toggleError(name, value) {
@@ -121,7 +117,6 @@ class ShippingInfoRoute extends React.Component {
 
   handleTextValidation(field) {
     if (this.state[field].length < 1) {
-      console.log(field, true);
       this.toggleError(field, true);
       return;
     }
@@ -137,6 +132,11 @@ class ShippingInfoRoute extends React.Component {
       <div className={className}>
 
         <Col xs={12} sm={8} smOffset={2}>
+          <ProductList />
+        </Col>
+
+        <Col xs={12} sm={8} smOffset={2}>
+          <hr />
           <h3 className="text-center">Shipping Address</h3>
           <hr />
 
@@ -145,7 +145,6 @@ class ShippingInfoRoute extends React.Component {
               required
               name="residential"
               placeholder="Address Type"
-              onChange={this.handleChange}
             />
           </Col>
           <Col xs={6}>
@@ -153,7 +152,6 @@ class ShippingInfoRoute extends React.Component {
               required
               name="email"
               placeholder="Email"
-              onChange={this.handleChange}
               onValidate={this.handleEmailValidation}
               status={errors.email ? 'error' : null}
             />
@@ -164,7 +162,6 @@ class ShippingInfoRoute extends React.Component {
               required
               name="emailConfirm"
               placeholder="Confirm Email"
-              onChange={this.handleChange}
               onValidate={this.handleEmailValidation}
               status={errors.emailConfirm ? 'error' : null}
             />
@@ -175,8 +172,6 @@ class ShippingInfoRoute extends React.Component {
               required
               name="firstName"
               placeholder="First Name"
-              value={this.state.firstName}
-              onChange={this.handleChange}
               onValidate={this.handleTextValidation}
               status={errors.firstName ? 'error' : null}
             />
@@ -187,8 +182,6 @@ class ShippingInfoRoute extends React.Component {
               required
               name="lastName"
               placeholder="Last Name"
-              value={this.state.lastName}
-              onChange={this.handleChange}
               onValidate={this.handleTextValidation}
               status={errors.lastName ? 'error' : null}
             />
@@ -199,8 +192,6 @@ class ShippingInfoRoute extends React.Component {
               required
               name="phone"
               placeholder="Mobile Phone"
-              value={this.state.phone}
-              onChange={this.handleChange}
               onValidate={this.handlePhoneValidation}
               status={errors.phone ? 'error' : null}
             />
@@ -213,8 +204,6 @@ class ShippingInfoRoute extends React.Component {
                 required
                 name="company"
                 placeholder="Company Name"
-                value={this.state.company}
-                onChange={this.handleChange}
                 onValidate={this.handleTextValidation}
                 status={errors.company ? 'error' : null}
               />
@@ -226,8 +215,6 @@ class ShippingInfoRoute extends React.Component {
               required
               name="address"
               placeholder="Address 1"
-              value={this.state.address}
-              onChange={this.handleChange}
               onValidate={this.handleTextValidation}
               status={errors.address ? 'error' : null}
             />
@@ -238,8 +225,6 @@ class ShippingInfoRoute extends React.Component {
               required
               name="secondAddress"
               placeholder="Address 2"
-              value={this.state.secondAddress}
-              onChange={this.handleChange}
               onValidate={this.handleTextValidation}
               onValidate={() => {}}
               status={null}
@@ -251,8 +236,6 @@ class ShippingInfoRoute extends React.Component {
               required
               name="state"
               placeholder="State"
-              value={this.state.state}
-              onChange={this.handleChange}
               onValidate={this.handleStateValidation}
               status={errors.state ? 'error' : null}
             />
@@ -263,8 +246,6 @@ class ShippingInfoRoute extends React.Component {
               required
               name="city"
               placeholder="City"
-              value={this.state.city}
-              onChange={this.handleChange}
               onValidate={this.handleTextValidation}
               status={errors.city ? 'error' : null}
             />
@@ -275,8 +256,6 @@ class ShippingInfoRoute extends React.Component {
               required
               name="zipcode"
               placeholder="Zipcode"
-              value={this.state.zipcode}
-              onChange={this.handleChange}
               onValidate={this.handleZipValidation}
               status={errors.zipcode ? 'error' : null}
             />

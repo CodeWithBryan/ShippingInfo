@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ButtonToolbar, ToggleButton, ToggleButtonGroup, ControlLabel } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { updateField } from 'src/Redux/shippingInfo';
 import styled from 'styled-components';
 
 class Radio extends React.Component {
@@ -11,8 +13,8 @@ class Radio extends React.Component {
   }
 
   handleChange(e) {
-    const { name, onChange } = this.props;
-    onChange(name, e);
+    const { name, dispatch } = this.props;
+    dispatch(updateField(name, e));
   }
 
   render() {
@@ -33,13 +35,15 @@ class Radio extends React.Component {
 
 Radio.propTypes = {
   name: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
   className: PropTypes.string.isRequired,
 };
 
-Radio.defaultProps = {
-};
+function mapStateToProps(state, props) {
+  return {
+    value: state[props.name]
+  };
+}
 
-export default styled(Radio)`
+export default styled(connect(mapStateToProps)(Radio))`
   margin-bottom: 20px;
 `;

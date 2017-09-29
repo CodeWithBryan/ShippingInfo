@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { updateField } from 'src/Redux/shippingInfo';
 
 class Phone extends React.Component {
   constructor(props) {
@@ -10,17 +12,18 @@ class Phone extends React.Component {
   }
 
   handleChange(e) {
-    const { onChange } = this.props;
+    const { name, dispatch } = this.props;
     let { value } = e.target;
 
     value = value.split(' ').join('');
 
     if (!isNaN(value) && value.length <= 10) {
-      onChange(e.target.name, value);
+      dispatch(updateField(name, value));
     }
   }
 
   formatNumber(num) {
+
     let numArray = num.split('');
 
     if(num.length > 6) {
@@ -56,10 +59,15 @@ class Phone extends React.Component {
 }
 
 Phone.propTypes = {
-  onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
 };
 
-export default Phone;
+function mapStateToProps(state, props) {
+  return {
+    value: state[props.name]
+  };
+}
+
+export default connect(mapStateToProps)(Phone);
