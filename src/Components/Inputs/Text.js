@@ -25,18 +25,26 @@ class Text extends React.Component {
   }
 
   render() {
-    const { status, placeholder } = this.props;
+    const { status, value, submitted, placeholder } = this.props;
     return (
       <FormGroup validationState={status}>
         <ControlLabel>{placeholder}</ControlLabel>
-        <FormControl
-          type="text"
-          {...this.props}
-          className="input-sm"
-          onChange={this.handleChange}
-          onBlur={this.handleValidation}
-        />
-        <FormControl.Feedback />
+        {submitted ?
+          <FormControl.Static>
+            {value}
+          </FormControl.Static>
+        :
+          <div>
+            <FormControl
+              type="text"
+              {...this.props}
+              className="input-sm"
+              onChange={this.handleChange}
+              onBlur={this.handleValidation}
+            />
+            <FormControl.Feedback />
+          </div>
+        }
       </FormGroup>
     );
   }
@@ -47,6 +55,7 @@ Text.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
+  submitted: PropTypes.bool.isRequired,
 };
 
 function mapStateToProps(state, props) {

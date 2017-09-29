@@ -70,7 +70,6 @@ class ShippingInfoRoute extends React.Component {
               required
               name="residential"
               placeholder="Address Type"
-              disabled={submitted}
             />
           </Col>
           <Col xs={6}>
@@ -78,7 +77,7 @@ class ShippingInfoRoute extends React.Component {
               required
               name="email"
               placeholder="Email"
-              disabled={submitted}
+              submitted={submitted}
             />
           </Col>
 
@@ -87,7 +86,7 @@ class ShippingInfoRoute extends React.Component {
               required
               name="emailConfirm"
               placeholder="Confirm Email"
-              disabled={submitted}
+              submitted={submitted}
             />
           </Col>
 
@@ -96,7 +95,7 @@ class ShippingInfoRoute extends React.Component {
               required
               name="firstName"
               placeholder="First Name"
-              disabled={submitted}
+              submitted={submitted}
             />
           </Col>
 
@@ -105,7 +104,7 @@ class ShippingInfoRoute extends React.Component {
               required
               name="lastName"
               placeholder="Last Name"
-              disabled={submitted}
+              submitted={submitted}
             />
           </Col>
 
@@ -114,7 +113,7 @@ class ShippingInfoRoute extends React.Component {
               required
               name="phone"
               placeholder="Mobile Phone"
-              disabled={submitted}
+              submitted={submitted}
             />
           </Col>
 
@@ -125,7 +124,7 @@ class ShippingInfoRoute extends React.Component {
                 required
                 name="company"
                 placeholder="Company Name"
-                disabled={submitted}
+                submitted={submitted}
               />
             }
           </Col>
@@ -135,7 +134,7 @@ class ShippingInfoRoute extends React.Component {
               required
               name="address"
               placeholder="Address 1"
-              disabled={submitted}
+              submitted={submitted}
             />
           </Col>
 
@@ -143,7 +142,7 @@ class ShippingInfoRoute extends React.Component {
             <Text
               name="secondAddress"
               placeholder="Address 2"
-              disabled={submitted}
+              submitted={submitted}
             />
           </Col>
 
@@ -152,7 +151,7 @@ class ShippingInfoRoute extends React.Component {
               required
               name="state"
               placeholder="State"
-              disabled={submitted}
+              submitted={submitted}
             />
           </Col>
 
@@ -161,7 +160,7 @@ class ShippingInfoRoute extends React.Component {
               required
               name="city"
               placeholder="City"
-              disabled={submitted}
+              submitted={submitted}
             />
           </Col>
 
@@ -170,7 +169,7 @@ class ShippingInfoRoute extends React.Component {
               required
               name="zipcode"
               placeholder="Zipcode"
-              disabled={submitted}
+              submitted={submitted}
             />
           </Col>
 

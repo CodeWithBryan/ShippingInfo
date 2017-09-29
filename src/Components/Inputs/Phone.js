@@ -39,24 +39,32 @@ class Phone extends React.Component {
   }
 
   handleValidation() {
-    const { dispatch, value, name } = this.props;
+    const { dispatch, submitted, value, name } = this.props;
     dispatch(validateField('Phone', name, value));
   }
 
   render() {
-    const { value, status, placeholder } = this.props;
+    const { value, status, submitted, placeholder } = this.props;
     return (
       <FormGroup validationState={status}>
         <ControlLabel>{placeholder}</ControlLabel>
-        <FormControl
-          type="text"
-          {...this.props}
-          value={this.formatNumber(value)}
-          className="input-sm"
-          onChange={this.handleChange}
-          onBlur={this.handleValidation}
-        />
-        <FormControl.Feedback />
+        {submitted ?
+          <FormControl.Static>
+            {this.formatNumber(value)}
+          </FormControl.Static>
+        :
+          <div>
+            <FormControl
+              type="text"
+              {...this.props}
+              value={this.formatNumber(value)}
+              className="input-sm"
+              onChange={this.handleChange}
+              onBlur={this.handleValidation}
+            />
+            <FormControl.Feedback />
+          </div>
+        }
       </FormGroup>
     );
   }
@@ -67,6 +75,7 @@ Phone.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
+  submitted: PropTypes.bool.isRequired,
 };
 
 function mapStateToProps(state, props) {

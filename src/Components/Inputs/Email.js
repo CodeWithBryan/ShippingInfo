@@ -18,27 +18,35 @@ class Email extends React.Component {
   }
 
   handleValidation() {
-    const { dispatch, value, name } = this.props;
+    const { dispatch, value, name, submitted } = this.props;
     dispatch(validateField('Email', name, value));
   }
 
   render() {
-    const { status, placeholder } = this.props;
+    const { value, submitted, status, placeholder } = this.props;
 
     return (
       <FormGroup
         validationState={status}
       >
         <ControlLabel>{placeholder}</ControlLabel>
-        <FormControl
-          type="text"
-          {...this.props}
-          className="input-sm"
-          onChange={this.handleChange}
-          onBlur={this.handleValidation}
-          onPaste={(e) => { e.preventDefault(); }}
-        />
-        <FormControl.Feedback />
+        {submitted ?
+          <FormControl.Static>
+            {value}
+          </FormControl.Static>
+        :
+          <div>
+            <FormControl
+              type="text"
+              {...this.props}
+              className="input-sm"
+              onChange={this.handleChange}
+              onBlur={this.handleValidation}
+              onPaste={(e) => { e.preventDefault(); }}
+            />
+            <FormControl.Feedback />
+          </div>
+        }
       </FormGroup>
     );
   }
@@ -49,6 +57,7 @@ Email.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
+  submitted: PropTypes.bool.isRequired,
 };
 
 function mapStateToProps(state, props) {
