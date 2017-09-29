@@ -17,7 +17,6 @@ class AppRoute extends React.Component {
           <Col xs={12} md={10} mdOffset={1}>
             <div>
               <Route exact path="/" component={ShippingInfoRoute} />
-              <Route exact path="/list" component={ShippingInfoRoute} />
             </div>
           </Col>
         </Row>

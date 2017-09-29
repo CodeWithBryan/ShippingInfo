@@ -15,7 +15,6 @@ class AppNav extends React.Component {
         </Navbar.Header>
         <Nav>
           <RouteNavItem href="/">Shipping Info</RouteNavItem>
-          <RouteNavItem href="/list">List</RouteNavItem>
         </Nav>
       </Navbar>
     );
