@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Col, Button } from 'react-bootstrap';
+import { Col, Button, Alert } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import Text from 'src/Components/Inputs/Text';
 import Email from 'src/Components/Inputs/Email';
@@ -10,6 +10,7 @@ import State from 'src/Components/Inputs/State';
 import Zipcode from 'src/Components/Inputs/Zipcode';
 import Radio from 'src/Components/Inputs/Radio';
 import ProductList from 'src/Components/ProductList';
+import { validateAllFields } from 'src/Redux/shippingInfo';
 
 /*
  *  This Component handles the page structure of the Shipping Form,
@@ -20,24 +21,21 @@ class ShippingInfoRoute extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      submitting: false,
-    }
-
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(e) {
+    const { dispatch, data } = this.props;
+    let tempData = data;
+    delete tempData.errors;
+
     e.preventDefault();
 
-    this.setState({
-      submitting: true
-    });
+    dispatch(validateAllFields(tempData));
   }
 
   render() {
-    const { className, residential } = this.props;
-    const { submitting } = this.state;
+    const { className, residential, submitted, errorCount } = this.props;
 
     return (
       <div className={className}>
@@ -51,12 +49,28 @@ class ShippingInfoRoute extends React.Component {
           <h3 className="text-center">Shipping Address</h3>
           <hr />
 
+          {submitted ?
+            <Col xs={12}>
+              <Alert bsStyle="success">
+                <strong>Success</strong> We've got your information!
+              </Alert>
+            </Col>
+          : null}
+
+          {errorCount > 0 ?
+            <Col xs={12}>
+              <Alert bsStyle="danger">
+                <strong>{errorCount} Errors!</strong> Please re-check your information.
+              </Alert>
+            </Col>
+          : null}
+
           <Col xs={12}>
             <Radio
               required
               name="residential"
               placeholder="Address Type"
-              disabled={submitting}
+              disabled={submitted}
             />
           </Col>
           <Col xs={6}>
@@ -64,7 +78,7 @@ class ShippingInfoRoute extends React.Component {
               required
               name="email"
               placeholder="Email"
-              disabled={submitting}
+              disabled={submitted}
             />
           </Col>
 
@@ -73,7 +87,7 @@ class ShippingInfoRoute extends React.Component {
               required
               name="emailConfirm"
               placeholder="Confirm Email"
-              disabled={submitting}
+              disabled={submitted}
             />
           </Col>
 
@@ -82,7 +96,7 @@ class ShippingInfoRoute extends React.Component {
               required
               name="firstName"
               placeholder="First Name"
-              disabled={submitting}
+              disabled={submitted}
             />
           </Col>
 
@@ -91,7 +105,7 @@ class ShippingInfoRoute extends React.Component {
               required
               name="lastName"
               placeholder="Last Name"
-              disabled={submitting}
+              disabled={submitted}
             />
           </Col>
 
@@ -100,7 +114,7 @@ class ShippingInfoRoute extends React.Component {
               required
               name="phone"
               placeholder="Mobile Phone"
-              disabled={submitting}
+              disabled={submitted}
             />
           </Col>
 
@@ -111,7 +125,7 @@ class ShippingInfoRoute extends React.Component {
                 required
                 name="company"
                 placeholder="Company Name"
-                disabled={submitting}
+                disabled={submitted}
               />
             }
           </Col>
@@ -121,16 +135,15 @@ class ShippingInfoRoute extends React.Component {
               required
               name="address"
               placeholder="Address 1"
-              disabled={submitting}
+              disabled={submitted}
             />
           </Col>
 
           <Col xs={12}>
             <Text
-              required
               name="secondAddress"
               placeholder="Address 2"
-              disabled={submitting}
+              disabled={submitted}
             />
           </Col>
 
@@ -139,7 +152,7 @@ class ShippingInfoRoute extends React.Component {
               required
               name="state"
               placeholder="State"
-              disabled={submitting}
+              disabled={submitted}
             />
           </Col>
 
@@ -148,7 +161,7 @@ class ShippingInfoRoute extends React.Component {
               required
               name="city"
               placeholder="City"
-              disabled={submitting}
+              disabled={submitted}
             />
           </Col>
 
@@ -157,7 +170,7 @@ class ShippingInfoRoute extends React.Component {
               required
               name="zipcode"
               placeholder="Zipcode"
-              disabled={submitting}
+              disabled={submitted}
             />
           </Col>
 
@@ -166,6 +179,7 @@ class ShippingInfoRoute extends React.Component {
               bsStyle="primary"
               className="pull-right"
               onClick={this.handleSubmit}
+              disabled={submitted}
             >Submit</Button>
           </Col>
 
@@ -178,11 +192,16 @@ class ShippingInfoRoute extends React.Component {
 ShippingInfoRoute.propTypes = {
   className: PropTypes.string.isRequired,
   residential: PropTypes.bool.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
-    residential: state.residential
+    data: state,
+    errors: state.errors,
+    residential: state.residential,
+    submitted: state.submitted,
+    errorCount: state.errors.errorCount
   }
 }
 

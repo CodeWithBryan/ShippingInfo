@@ -24,6 +24,7 @@ const defaultState = {
   state: '',
   city: '',
   zipcode: '',
+  submitted: false,
   errors: {
     residential: false,
     firstName: false,
@@ -37,6 +38,7 @@ const defaultState = {
     state: false,
     city: false,
     zipcode: false,
+    errorCount: 0,
   },
   products: [],
 };

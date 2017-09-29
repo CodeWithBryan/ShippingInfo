@@ -18,8 +18,10 @@ class Text extends React.Component {
   }
 
   handleValidation() {
-    const { dispatch, value, name } = this.props;
-    dispatch(validateField('Text', name, value));
+    const { dispatch, value, name, required } = this.props;
+    if (required) {
+      dispatch(validateField('Text', name, value));
+    }
   }
 
   render() {
