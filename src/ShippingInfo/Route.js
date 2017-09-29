@@ -70,6 +70,7 @@ class ShippingInfoRoute extends React.Component {
               required
               name="residential"
               placeholder="Address Type"
+              submitted={submitted}
             />
           </Col>
           <Col xs={6}>
