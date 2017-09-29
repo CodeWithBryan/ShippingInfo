@@ -17,6 +17,7 @@ class ProductList extends React.Component {
       <div>
         {products.filter(item => item.product.colourId === 'Red').map(item => (
           <Product
+            key={item.itemCode}
             name={item.product.name}
             picture={item.product.largeImage}
             price={item.listPrice}

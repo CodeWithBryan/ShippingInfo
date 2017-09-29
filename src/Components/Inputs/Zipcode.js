@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { updateField, requestZip } from 'src/Redux/shippingInfo';
+import { updateField, requestZip, validateField } from 'src/Redux/shippingInfo';
 
 class Zipcode extends React.Component {
   constructor(props) {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleBlur = this.handleBlur.bind(this);
+    this.handleValidation = this.handleValidation.bind(this);
   }
 
   handleChange(e) {
@@ -21,10 +21,10 @@ class Zipcode extends React.Component {
     }
   }
 
-  handleBlur() {
-    const { dispatch, onValidate, value } = this.props;
+  handleValidation() {
+    const { dispatch, value, name } = this.props;
     dispatch(requestZip(value));
-    onValidate();
+    dispatch(validateField('Zipcode', name, value));
   }
 
   render() {
@@ -38,7 +38,7 @@ class Zipcode extends React.Component {
           value={value}
           className="input-sm"
           onChange={this.handleChange}
-          onBlur={this.handleBlur}
+          onBlur={this.handleValidation}
         />
         <FormControl.Feedback />
       </FormGroup>
@@ -47,7 +47,6 @@ class Zipcode extends React.Component {
 }
 
 Zipcode.propTypes = {
-  onValidate: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
@@ -55,7 +54,8 @@ Zipcode.propTypes = {
 
 function mapStateToProps(state, props) {
   return {
-    value: state[props.name]
+    value: state[props.name],
+    status: state.errors[props.name] ? 'error' : null
   };
 }
 

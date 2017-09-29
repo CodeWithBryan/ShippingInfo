@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Col, Button } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import Text from 'src/Components/Inputs/Text';
 import Email from 'src/Components/Inputs/Email';
 import Phone from 'src/Components/Inputs/Phone';
@@ -20,113 +21,23 @@ class ShippingInfoRoute extends React.Component {
     super(props);
 
     this.state = {
-      residential: true,
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      company: '',
-      emailConfirm: '',
-      address: '',
-      secondAddress: '',
-      state: '',
-      city: '',
-      zipcode: '',
-      errors: {
-        residential: false,
-        firstName: false,
-        lastName: false,
-        email: false,
-        phone: false,
-        company: false,
-        emailConfirm: false,
-        address: false,
-        secondAddress: false,
-        state: false,
-        city: false,
-        zipcode: false,
-      }
-    };
+      submitting: false,
+    }
 
-    this.handleZipValidation = this.handleZipValidation.bind(this);
-    this.handleTextValidation = this.handleTextValidation.bind(this);
-    this.handleStateValidation = this.handleStateValidation.bind(this);
-    this.handleEmailValidation = this.handleEmailValidation.bind(this);
-    this.handlePhoneValidation = this.handlePhoneValidation.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  toggleError(name, value) {
+  handleSubmit(e) {
+    e.preventDefault();
+
     this.setState({
-      errors: Object.assign({}, this.state.errors, { [name]: value })
+      submitting: true
     });
   }
 
-  handleZipValidation() {
-    const { zipcode } = this.state;
-    const zip = /^\d{5}(-\d{4})?$/;
-
-    if (zipcode.length !== 5) {
-      this.toggleError('zipcode', true);
-      return;
-    }
-
-    if(!zip.test(zipcode)) {
-      this.toggleError('zipcode', true);
-      return;
-    }
-
-    this.toggleError('zipcode', false);
-  }
-
-  handleStateValidation() {
-    const { state } = this.state;
-    if (state === '') {
-      this.toggleError('state', true);
-      return;
-    }
-
-    this.toggleError('state', false);
-  }
-
-  handlePhoneValidation() {
-    const { phone } = this.state;
-
-    if (phone.length !== 10) {
-      this.toggleError('phone', true);
-      return;
-    }
-
-    this.toggleError('phone', false);
-  }
-
-  handleEmailValidation(field) {
-    const regex = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
-
-    if (this.state[field].length < 1) {
-      this.toggleError(field, true);
-      return;
-    }
-
-    if(!regex.test(this.state[field])) {
-      this.toggleError(field, true);
-      return;
-    }
-
-    this.toggleError(field, false);
-  }
-
-  handleTextValidation(field) {
-    if (this.state[field].length < 1) {
-      this.toggleError(field, true);
-      return;
-    }
-
-    this.toggleError(field, false);
-  }
-
   render() {
-    const { className } = this.props;
-    const { residential, errors } = this.state;
+    const { className, residential } = this.props;
+    const { submitting } = this.state;
 
     return (
       <div className={className}>
@@ -145,6 +56,7 @@ class ShippingInfoRoute extends React.Component {
               required
               name="residential"
               placeholder="Address Type"
+              disabled={submitting}
             />
           </Col>
           <Col xs={6}>
@@ -152,8 +64,7 @@ class ShippingInfoRoute extends React.Component {
               required
               name="email"
               placeholder="Email"
-              onValidate={this.handleEmailValidation}
-              status={errors.email ? 'error' : null}
+              disabled={submitting}
             />
           </Col>
 
@@ -162,8 +73,7 @@ class ShippingInfoRoute extends React.Component {
               required
               name="emailConfirm"
               placeholder="Confirm Email"
-              onValidate={this.handleEmailValidation}
-              status={errors.emailConfirm ? 'error' : null}
+              disabled={submitting}
             />
           </Col>
 
@@ -172,8 +82,7 @@ class ShippingInfoRoute extends React.Component {
               required
               name="firstName"
               placeholder="First Name"
-              onValidate={this.handleTextValidation}
-              status={errors.firstName ? 'error' : null}
+              disabled={submitting}
             />
           </Col>
 
@@ -182,8 +91,7 @@ class ShippingInfoRoute extends React.Component {
               required
               name="lastName"
               placeholder="Last Name"
-              onValidate={this.handleTextValidation}
-              status={errors.lastName ? 'error' : null}
+              disabled={submitting}
             />
           </Col>
 
@@ -192,8 +100,7 @@ class ShippingInfoRoute extends React.Component {
               required
               name="phone"
               placeholder="Mobile Phone"
-              onValidate={this.handlePhoneValidation}
-              status={errors.phone ? 'error' : null}
+              disabled={submitting}
             />
           </Col>
 
@@ -204,8 +111,7 @@ class ShippingInfoRoute extends React.Component {
                 required
                 name="company"
                 placeholder="Company Name"
-                onValidate={this.handleTextValidation}
-                status={errors.company ? 'error' : null}
+                disabled={submitting}
               />
             }
           </Col>
@@ -215,8 +121,7 @@ class ShippingInfoRoute extends React.Component {
               required
               name="address"
               placeholder="Address 1"
-              onValidate={this.handleTextValidation}
-              status={errors.address ? 'error' : null}
+              disabled={submitting}
             />
           </Col>
 
@@ -225,9 +130,7 @@ class ShippingInfoRoute extends React.Component {
               required
               name="secondAddress"
               placeholder="Address 2"
-              onValidate={this.handleTextValidation}
-              onValidate={() => {}}
-              status={null}
+              disabled={submitting}
             />
           </Col>
 
@@ -236,8 +139,7 @@ class ShippingInfoRoute extends React.Component {
               required
               name="state"
               placeholder="State"
-              onValidate={this.handleStateValidation}
-              status={errors.state ? 'error' : null}
+              disabled={submitting}
             />
           </Col>
 
@@ -246,8 +148,7 @@ class ShippingInfoRoute extends React.Component {
               required
               name="city"
               placeholder="City"
-              onValidate={this.handleTextValidation}
-              status={errors.city ? 'error' : null}
+              disabled={submitting}
             />
           </Col>
 
@@ -256,13 +157,16 @@ class ShippingInfoRoute extends React.Component {
               required
               name="zipcode"
               placeholder="Zipcode"
-              onValidate={this.handleZipValidation}
-              status={errors.zipcode ? 'error' : null}
+              disabled={submitting}
             />
           </Col>
 
           <Col xs={12}>
-            <Button bsStyle="primary" className="pull-right">Continue</Button>
+            <Button
+              bsStyle="primary"
+              className="pull-right"
+              onClick={this.handleSubmit}
+            >Submit</Button>
           </Col>
 
         </Col>
@@ -273,9 +177,16 @@ class ShippingInfoRoute extends React.Component {
 
 ShippingInfoRoute.propTypes = {
   className: PropTypes.string.isRequired,
+  residential: PropTypes.bool.isRequired,
 };
 
-export default styled(ShippingInfoRoute)`
+function mapStateToProps(state) {
+  return {
+    residential: state.residential
+  }
+}
+
+export default styled(connect(mapStateToProps)(ShippingInfoRoute))`
 background: #fff;
 padding: 30px;
 `;

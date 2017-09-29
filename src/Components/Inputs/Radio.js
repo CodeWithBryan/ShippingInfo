@@ -18,11 +18,11 @@ class Radio extends React.Component {
   }
 
   render() {
-    const { className } = this.props;
+    const { className, placeholder } = this.props;
 
     return (
       <ButtonToolbar className={`${className} pull-left`}>
-        <ControlLabel>{this.props.placeholder}</ControlLabel>
+        <ControlLabel>{placeholder}</ControlLabel>
         <br />
         <ToggleButtonGroup type="radio" name="options" defaultValue={true} onChange={this.handleChange}>
           <ToggleButton className="btn-sm" value={true}>Residential</ToggleButton>

@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { updateField } from 'src/Redux/shippingInfo';
+import { updateField, validateField } from 'src/Redux/shippingInfo';
 
 class State extends React.Component {
   constructor(props) {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleValidation = this.handleValidation.bind(this);
   }
 
   handleChange(e) {
@@ -16,17 +17,20 @@ class State extends React.Component {
     dispatch(updateField(name, e.target.value));
   }
 
+  handleValidation() {
+    const { dispatch, value, name } = this.props;
+    dispatch(validateField('State', name, value));
+  }
+
   render() {
-    const { value, status, onValidate, placeholder } = this.props;
+    const { value, status, placeholder } = this.props;
     return (
-      <FormGroup
-        validationState={status ? 'error' : null}
-      >
+      <FormGroup validationState={status}>
         <ControlLabel>{placeholder}</ControlLabel>
         <select
           {...this.props}
           onChange={this.handleChange}
-          onBlur={onValidate}
+          onBlur={this.handleValidation}
           className="input-sm form-control"
         >
           <option value="">Select State</option>
@@ -89,16 +93,16 @@ class State extends React.Component {
 }
 
 State.propTypes = {
-  onValidate: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
+  status: PropTypes.string,
   name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  confirm: PropTypes.string,
 };
 
 function mapStateToProps(state, props) {
   return {
-    value: state[props.name]
+    value: state[props.name],
+    status: state.errors[props.name] ? 'error' : null
   };
 }
 

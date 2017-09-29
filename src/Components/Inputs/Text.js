@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { updateField } from 'src/Redux/shippingInfo';
+import { updateField, validateField } from 'src/Redux/shippingInfo';
 
 class Text extends React.Component {
   constructor(props) {
@@ -18,16 +18,14 @@ class Text extends React.Component {
   }
 
   handleValidation() {
-    const { onValidate, name } = this.props;
-    onValidate(name);
+    const { dispatch, value, name } = this.props;
+    dispatch(validateField('Text', name, value));
   }
 
   render() {
-    const { onValidate, status, placeholder } = this.props;
+    const { status, placeholder } = this.props;
     return (
-      <FormGroup
-        validationState={status}
-      >
+      <FormGroup validationState={status}>
         <ControlLabel>{placeholder}</ControlLabel>
         <FormControl
           type="text"
@@ -43,14 +41,16 @@ class Text extends React.Component {
 }
 
 Text.propTypes = {
-  value: PropTypes.string.isRequired,
+  status: PropTypes.string,
   name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
 };
 
 function mapStateToProps(state, props) {
   return {
-    value: state[props.name]
+    value: state[props.name],
+    status: state.errors[props.name] ? 'error' : null
   };
 }
 

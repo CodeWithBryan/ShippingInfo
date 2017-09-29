@@ -48,6 +48,64 @@ export function requestProducts() {
   }
 }
 
+export function validateField(fieldType, name, value) {
+  const emailRegex = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+  const zip = /^\d{5}(-\d{4})?$/;
+
+  const error = {
+    type: UPDATE_ERROR,
+    name,
+    value: true
+  };
+
+  const noError = {
+    type: UPDATE_ERROR,
+    name,
+    value: false
+  };
+
+  switch (fieldType) {
+    case 'Email':
+
+      if (value.length < 1 || !emailRegex.test(value)) {
+        return error;
+      }
+      return noError;
+
+    case 'Phone':
+
+      if (value.length !== 10) {
+        return error;
+      }
+      return noError;
+
+    case 'State':
+
+      if (value === '') {
+        return error;
+      }
+      return noError;
+
+    case 'Text':
+
+      if (value.length < 1) {
+        return error;
+      }
+      return noError;
+
+    case 'Zipcode':
+
+      if (value.length !== 5 || !zip.test(value)) {
+        return error;
+      }
+      return noError;
+
+    default:
+      break;
+  }
+}
+
+
 export function reducer(state, action) {
   switch (action.type) {
     case UPDATE_FIELD:
