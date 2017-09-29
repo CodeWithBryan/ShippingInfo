@@ -1,6 +1,8 @@
 # ShippingInfo
 A demo shipping input built in ReactJS
 
+## [Demo](http://maze.mrboolean.io/)
+
 ## Setup
  * Clone Repo
  * Run `yarn`
